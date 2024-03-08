@@ -26,17 +26,23 @@ function startTimer() {
   startButton.disabled = true;
 }
 
-function stopTimer() {}
+function stopTimer() {
+  clearInterval(interval);
+  addToLaplist();
+  resetTimerData();
+  stopButton.disabled = false;
+}
 
 function pauseTimer() {
   clearInterval(interval);
-  pauseButton.disabled = true;
+  addToLaplist();
+  startButton.disabled = false;
 }
 
 function resetTimer() {
   clearInterval(interval);
   resetTimerData();
-  resetTimerData.disabled = true;
+  startButton.disabled = false;
 }
 
 function updateTimer() {
@@ -69,4 +75,14 @@ function resetTimerData() {
   seconds = 0;
   milliseconds = 0;
   displayTimer();
+}
+
+function addToLaplist() {
+  const lapTime = `${minutes}:${padTime(seconds)}:${padTime(milliseconds)}`;
+
+  const listItem = document.createElement("li");
+  listItem.innerHTML = `<span>Lap ${
+    lapList.childElementCount + 1
+  }: </span>${lapTime}`;
+  lapList.appendChild(listItem);
 }
